@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table{
+            width: 100%;
+        }
+        table,th,tr,td{
+            border: 5px solid rgb(34, 156, 218);
+            border-collapse: collapse;
+            font-size: 30px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+ <input type="text" id="inp">
+ <button id="ser">search</button>
+ <button id="a">Sort by ID</button>
+ <button id="b">Sort by Name</button> <br><br>
+ <table id="tbl">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr></tr>
+    </tbody>
+ </table>
+ <script>
+    let obj = [
+        { id:101,name:"abc"},
+        { id:103,name:"xyz" },
+        { id:102,name:"daa" },
+        { id:104,name:"ccc" }        
+    ]
+    let tbl = document.querySelector("#tbl tbody")
+    let s_one = document.getElementById("a")
+    let s_two = document.getElementById("b")
+    let search = document.getElementById("ser")
+
+    function renderTable(data){
+        tbl.innerHTML = ""
+        data.forEach(item => {
+            let row = tbl.insertRow()
+            row.insertCell(0).textContent=item.id
+            row.insertCell(1).textContent=item.name
+        })
+    }
+    s_one.addEventListener("click",()=>{
+        obj.sort((a,b)=>a.id-b.id)
+        renderTable(obj)
+    })
+
+
+    s_two.addEventListener("click",()=>{
+        obj.sort((a,b)=>a.name.localeCompare(b.name))
+        renderTable(obj)
+    })
+
+  
+    search.addEventListener("click",()=>{
+        let inp = document.getElementById("inp").value
+       let upd =  obj.filter((i)=>i.id.toString()===inp || i.name.startsWith(inp))
+        renderTable(upd)
+    })
+
+    renderTable(obj)
+ </script>
+</body>
+</html>
